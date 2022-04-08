@@ -23,8 +23,6 @@ public class AboutUsFragment extends Fragment {
 
         binding = FragmentAboutUsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        final TextView textView = binding.textGallery;
-        aboutUsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
