@@ -14,5 +14,5 @@ dependencyResolutionManagement {
         maven { url "https://jitpack.io" }
     }
 }
-rootProject.name = "YDownload"
+rootProject.name = "Multi Download"
 include ':app'

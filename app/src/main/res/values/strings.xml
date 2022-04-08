@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YDownload</string>
+    <string name="app_name">Multi Download</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -17,4 +17,5 @@
     <string name="app_update">Couldn\'t extract URLs you may need an update:
         <a href="https://github.com/HaarigerHarald/android-youtubeExtractor/releases/latest">latest GitHub release</a></string>
     <string name="youtube">Youtube</string>
+    <string name="youtube_video_download">Youtube Video Download</string>
 </resources>

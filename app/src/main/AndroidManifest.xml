@@ -17,10 +17,8 @@
         android:roundIcon="@drawable/player"
         android:supportsRtl="true"
         android:theme="@style/Theme.YDownload"
-        android:usesCleartextTraffic="true">
-        <!-- <activity -->
-        <!-- android:name=".ui.activities.MainActivity" -->
-        <!-- android:exported="false" /> -->
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
         <activity
             android:name=".DashboardActivity"
             android:exported="false"
@@ -53,7 +51,7 @@
 
         <receiver
             android:name=".receiver.MyBroadcast"
-            android:exported="false"></receiver>
+            android:exported="false" />
     </application>
 
 </manifest>

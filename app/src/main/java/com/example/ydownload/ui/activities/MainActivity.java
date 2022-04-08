@@ -29,6 +29,8 @@ import com.example.ydownload.databinding.ActivityMainBinding;
 import com.example.ydownload.ui.Facebook.FacebookFragment;
 import com.example.ydownload.utils.DownloaderUtil;
 import com.example.ydownload.utils.SharedPreference;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding activityMainBinding;
     private static String urlLink;
     private LinearLayout mainLayout;
-    private ProgressBar mainProgressBarYoutube;
-//    private FrameLayout processBarFacebook, layoutFacebook;
+    private final Sprite foldCube = new FoldingCube();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_main);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainLayout = activityMainBinding.mainLayout;
-        mainProgressBarYoutube = activityMainBinding.processBarYoutube;
+        activityMainBinding.spinKit.setIndeterminateDrawable(foldCube);
+        activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
         SharedPreference.getInstance().saveValue(getApplicationContext(), "button", "play");
         // Check how it was started and if we can get the youtube link
         if (savedInstanceState == null && Intent.ACTION_SEND.equals(getIntent().getAction())
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             if (intentUrlValue != null) {
                 Log.e("Get Url", urlLink);
                 if ((intentUrlValue.contains("://youtu.be/") || intentUrlValue.contains("youtube.com/watch?v="))) {
-                    activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+                    activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.VISIBLE);
                     activityMainBinding.frameLayoutFacebook.setVisibility(View.GONE);
 
                     // We have a valid link
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SharedPreference.getInstance().saveValue(getApplicationContext(), "button", "download");
                 executeFacebookVideo(urlLink);
+                finish();
             }
         });
     }
@@ -182,56 +185,66 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getYoutubeDownloadUrl(String youtubeLink) {
-        new YouTubeExtractor(this) {
+        try {
+            new YouTubeExtractor(this) {
 
-            @Override
-            public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
-                mainProgressBarYoutube.setVisibility(View.GONE);
+                @Override
+                public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
+                    activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+                    if (ytFiles == null) {
+                        // Something went wrong we got no urls. Always check this.
+                        finish();
+                        return;
+                    }
+                    // Iterate over itags
+                    for (int i = 0, itag; i < ytFiles.size(); i++) {
+                        itag = ytFiles.keyAt(i);
+                        // ytFile represents one file with its url and meta data
+                        YtFile ytFile = ytFiles.get(itag);
 
-                if (ytFiles == null) {
-                    // Something went wrong we got no urls. Always check this.
-                    finish();
-                    return;
-                }
-                // Iterate over itags
-                for (int i = 0, itag; i < ytFiles.size(); i++) {
-                    itag = ytFiles.keyAt(i);
-                    // ytFile represents one file with its url and meta data
-                    YtFile ytFile = ytFiles.get(itag);
-
-                    // Just add videos in a decent format => height -1 = audio
-                    if (ytFile.getFormat().getHeight() == -1 || ytFile.getFormat().getHeight() >= 360) {
-                        addButtonToMainLayout(vMeta.getTitle(), ytFile);
+                        // Just add videos in a decent format => height -1 = audio
+                        if (ytFile.getFormat().getHeight() == -1 || ytFile.getFormat().getHeight() >= 360) {
+                            addButtonToMainLayout(vMeta.getTitle(), ytFile);
+                        }
                     }
                 }
-            }
-        }.extract(youtubeLink);
+            }.extract(youtubeLink);
+        } catch (Exception e) {
+            activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+            Log.e("Error", e.getMessage());
+        }
     }
 
     private void addButtonToMainLayout(final String videoTitle, final YtFile ytfile) {
-        // Display some buttons and let the user choose the format
-        String btnText = (ytfile.getFormat().getHeight() == -1) ? "Audio " +
-                ytfile.getFormat().getAudioBitrate() + " kbit/s" :
-                ytfile.getFormat().getHeight() + "p";
-        btnText += (ytfile.getFormat().isDashContainer()) ? " dash" : "";
-        Button btn = new Button(this);
-        btn.setText(btnText);
-        btn.setOnClickListener(new View.OnClickListener() {
+        try {
+            // Display some buttons and let the user choose the format
+            String btnText = (ytfile.getFormat().getHeight() == -1) ? "Audio " +
+                    ytfile.getFormat().getAudioBitrate() + " kbit/s" :
+                    ytfile.getFormat().getHeight() + "p";
+            btnText += (ytfile.getFormat().isDashContainer()) ? " dash" : "";
+            Button btn = new Button(this);
+            btn.setText(btnText);
+            btn.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                String filename;
-                if (videoTitle.length() > 55) {
-                    filename = videoTitle.substring(0, 55) + "." + ytfile.getFormat().getExt();
-                } else {
-                    filename = videoTitle + "." + ytfile.getFormat().getExt();
+                @Override
+                public void onClick(View v) {
+                    String filename;
+                    if (videoTitle.length() > 55) {
+                        filename = videoTitle.substring(0, 55) + "." + ytfile.getFormat().getExt();
+                    } else {
+                        filename = videoTitle + "." + ytfile.getFormat().getExt();
+                    }
+                    filename = filename.replaceAll("[\\\\><\"|*?%:#/]", "");
+                    DownloaderUtil.download(getApplicationContext(), ytfile.getUrl(), videoTitle, filename);
+                    Toast.makeText(getApplicationContext(), "Download will start... Please check your notification bar.", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
-                filename = filename.replaceAll("[\\\\><\"|*?%:#/]", "");
-                DownloaderUtil.download(getApplicationContext(), ytfile.getUrl(), videoTitle, filename);
-                Toast.makeText(getApplicationContext(), "Download will start... Please check your notification bar.", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-        mainLayout.addView(btn);
+            });
+            mainLayout.addView(btn);
+        } catch (Exception e) {
+            activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+            Log.e("Error", e.getMessage());
+        }
+
     }
 }

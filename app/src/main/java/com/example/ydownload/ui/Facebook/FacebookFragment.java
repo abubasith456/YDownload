@@ -24,10 +24,11 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.MediaController;
 import android.widget.Toast;
-
-import com.example.ydownload.databinding.FacebookFragmentBinding;
+import com.example.ydownload.databinding.FragmentFacebookBinding;
 import com.example.ydownload.utils.DownloaderUtil;
 import com.example.ydownload.utils.SharedPreference;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jsoup.Jsoup;
@@ -40,10 +41,9 @@ import java.net.URL;
 public class FacebookFragment extends Fragment {
 
     private FacebookViewModel mViewModel;
-    private FacebookFragmentBinding facebookFragmentBinding;
-    boolean loadingFinished = true;
-    boolean redirect = false;
+    private FragmentFacebookBinding facebookFragmentBinding;
     private FrameLayout processBar;
+    private final Sprite foldCube = new FoldingCube();
 
     public static FacebookFragment newInstance() {
         return new FacebookFragment();
@@ -52,7 +52,7 @@ public class FacebookFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        facebookFragmentBinding = FacebookFragmentBinding.inflate(inflater, container, false);
+        facebookFragmentBinding = FragmentFacebookBinding.inflate(inflater, container, false);
         return facebookFragmentBinding.getRoot();
     }
 
@@ -62,6 +62,7 @@ public class FacebookFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(FacebookViewModel.class);
         SharedPreference.getInstance().saveValue(getContext(), "button", "download");
         processBar = facebookFragmentBinding.frameLayoutProcessBarFacebook;
+        facebookFragmentBinding.spinKit.setIndeterminateDrawable(foldCube);
         facebookFragmentBinding.buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

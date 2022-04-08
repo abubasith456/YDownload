@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/background_custom_progress_bar.xml" value="0.12" />
+        <entry key="app/src/main/res/drawable/background_half_round_corner_shape.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/background_rounded_edit_text_gray.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/icon_home.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/logo_test.xml" value="0.12" />
@@ -15,6 +16,8 @@
         <entry key="app/src/main/res/layout/app_bar_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/content_dashboard.xml" value="0.2359375" />
         <entry key="app/src/main/res/layout/facebook_fragment.xml" value="0.11510416666666666" />
+        <entry key="app/src/main/res/layout/fragment_about_us.xml" value="0.35194788175355257" />
+        <entry key="app/src/main/res/layout/fragment_facebook.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.11510416666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.11510416666666666" />

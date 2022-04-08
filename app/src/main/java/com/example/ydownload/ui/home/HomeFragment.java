@@ -64,7 +64,6 @@ public class HomeFragment extends Fragment {
 //                downloadFB(yLink);
                 if (yLink != null && !yLink.isEmpty()) {
                     if ((yLink.contains("://youtu.be/") || yLink.contains("youtube.com/watch?v="))) {
-//                        binding.processBar.setVisibility(View.VISIBLE);
                         binding.spinKit.setVisibility(View.VISIBLE);
                         binding.mainLayout.removeAllViews();
                         getYoutubeDownloadUrl(binding.editText.getText().toString());
@@ -80,23 +79,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-//    private void downloadFB(String yLink) {
-//        URL url = null;
-//        try {
-//            url = new URL(binding.editText.getText().toString());
-//            String host = url.getHost();
-//            if (host.contains("facebook.com")) {
-//                new CallGetFbData().execute(binding.editText.getText().toString());
-//            } else {
-//                Toast.makeText(getContext(), "URL id invalid", Toast.LENGTH_SHORT).show();
-//            }
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-
 
     private void getYoutubeDownloadUrl(String youtubeLink) {
         new YouTubeExtractor(getActivity()) {

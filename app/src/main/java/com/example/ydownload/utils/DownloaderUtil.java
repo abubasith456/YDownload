@@ -14,7 +14,6 @@ public class DownloaderUtil {
     public static String RootDirFacebook = "Video downloading";
 
     public static void download(Context context, String downloadPath, String title, String fileName) {
-        Toast.makeText(context, "Download started...", Toast.LENGTH_SHORT).show();
         Uri uri = Uri.parse(downloadPath);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setTitle(title);
@@ -22,6 +21,8 @@ public class DownloaderUtil {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
         DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        Toast.makeText(context, "Download started...", Toast.LENGTH_SHORT).show();
         manager.enqueue(request);
+
     }
 }
