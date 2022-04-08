@@ -1,48 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="at.huber.youtubeDownloader.DownloadActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/app_name"
-            android:textSize="20sp"
-            android:textColor="@android:color/black"
-            android:textAppearance="@android:style/TextAppearance.WindowTitle" />
-
-        <ScrollView
+        <!--Frame layout Youtube-->
+        <FrameLayout
+            android:id="@+id/frameLayoutYoutube"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:layout_marginTop="16dp"
-            android:animateLayoutChanges="true">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/main_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <ProgressBar
-                    android:id="@+id/processBar"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="23dp"
+                    android:text="@string/app_name"
+                    android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:animateLayoutChanges="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/main_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ProgressBar
+                            android:id="@+id/processBarYoutube"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center" />
+
+                    </LinearLayout>
+                </ScrollView>
             </LinearLayout>
+        </FrameLayout>
 
-        </ScrollView>
-    </LinearLayout>
+        <!--Frame layout Facebook-->
+
+        <LinearLayout
+            android:id="@+id/frameLayoutFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@color/white">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonDownload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:background="@drawable/background_rounded_edit_text_gray"
+                android:backgroundTint="@color/red"
+               android:layout_margin="20dp"
+                android:elevation="20dp"
+                android:text="Download" />
+
+                <VideoView
+                    android:id="@+id/videoViewFaceBook"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp" />
+                <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+        </LinearLayout>
+
+        <!--Layout processBar-->
+        <FrameLayout
+            android:id="@+id/frameLayoutProcessBarFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_shade"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateDrawable="@drawable/background_custom_progress_bar" />
+        </FrameLayout>
+
+    </FrameLayout>
 </layout>

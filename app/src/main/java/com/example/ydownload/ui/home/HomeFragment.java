@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,8 +19,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ydownload.databinding.FragmentHomeBinding;
+import com.example.ydownload.utils.DownloaderUtil;
+import com.example.ydownload.utils.SharedPreference;
 import com.example.ydownload.utils.Utils;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
@@ -30,6 +36,7 @@ import at.huber.youtubeExtractor.YtFile;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private final Sprite foldCube = new FoldingCube();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,16 +53,22 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        SharedPreference.getInstance().saveValue(getContext(), "ButtonPress", "no");
+        binding.spinKit.setIndeterminateDrawable(foldCube);
         binding.buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Utils.getInstance().hideSoftKeyboard(getActivity());
                 String yLink = binding.editText.getText().toString();
+//                downloadFB(yLink);
                 if (yLink != null && !yLink.isEmpty()) {
                     if ((yLink.contains("://youtu.be/") || yLink.contains("youtube.com/watch?v="))) {
-                        binding.processBar.setVisibility(View.VISIBLE);
+//                        binding.processBar.setVisibility(View.VISIBLE);
+                        binding.spinKit.setVisibility(View.VISIBLE);
+                        binding.mainLayout.removeAllViews();
                         getYoutubeDownloadUrl(binding.editText.getText().toString());
+                        SharedPreference.getInstance().saveValue(getContext(), "ButtonPress", "yes");
                     } else {
                         Snackbar.make(view, "Not a valid YouTube link!", Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
@@ -64,17 +77,34 @@ public class HomeFragment extends Fragment {
                     Snackbar.make(view, "Please enter the URL", Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
                 }
-
             }
         });
     }
+
+//    private void downloadFB(String yLink) {
+//        URL url = null;
+//        try {
+//            url = new URL(binding.editText.getText().toString());
+//            String host = url.getHost();
+//            if (host.contains("facebook.com")) {
+//                new CallGetFbData().execute(binding.editText.getText().toString());
+//            } else {
+//                Toast.makeText(getContext(), "URL id invalid", Toast.LENGTH_SHORT).show();
+//            }
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
 
     private void getYoutubeDownloadUrl(String youtubeLink) {
         new YouTubeExtractor(getActivity()) {
 
             @Override
             public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
-                binding.processBar.setVisibility(View.GONE);
+//                binding.processBar.setVisibility(View.GONE);
+                binding.spinKit.setVisibility(View.GONE);
 
                 if (ytFiles == null) {
                     // Something went wrong we got no urls. Always check this.
@@ -103,6 +133,7 @@ public class HomeFragment extends Fragment {
                 ytfile.getFormat().getHeight() + "p";
         btnText += (ytfile.getFormat().isDashContainer()) ? " dash" : "";
         Button btn = new Button(getContext());
+        btn.setElevation(10);
         btn.setText(btnText);
         btn.setOnClickListener(new View.OnClickListener() {
 
@@ -115,11 +146,12 @@ public class HomeFragment extends Fragment {
                     filename = videoTitle + "." + ytfile.getFormat().getExt();
                 }
                 filename = filename.replaceAll("[\\\\><\"|*?%:#/]", "");
-                downloadFromUrl(ytfile.getUrl(), videoTitle, filename);
+                DownloaderUtil.download(getContext(),ytfile.getUrl(), videoTitle, filename);
+//                downloadFromUrl(ytfile.getUrl(), videoTitle, filename);
                 Toast.makeText(getContext(), "Download will start... Please check your notification bar.", Toast.LENGTH_SHORT).show();
             }
         });
-        binding.mainLayout.addView(btn);
+        binding.mainLayout.addView(btn, 0);
     }
 
     private void downloadFromUrl(String youtubeDlUrl, String downloadTitle, String fileName) {

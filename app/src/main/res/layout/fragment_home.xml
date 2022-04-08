@@ -14,21 +14,25 @@
             type="android.view.View" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+        tools:context=".ui.home.HomeFragment"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/background_rounded_edit_text_gray"
+            android:elevation="20dp"
+            android:hint="Paste your URL here"
+            android:padding="10dp"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:hint="Paste your URL here"
-            android:backgroundTint="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -41,46 +45,63 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:background="@drawable/background_rounded_edit_text_gray"
             android:backgroundTint="@color/red"
+            android:layout_gravity="center"
+            android:elevation="20dp"
             android:text="Download"
             app:layout_constraintEnd_toEndOf="parent"
-            android:elevation="20dp"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText" />
 
-        <LinearLayout
-            android:id="@+id/mainLayout"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="15dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonDownload">
 
-            <ProgressBar
-                android:id="@+id/processBar"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/mainLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_gravity="center" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDownload">
 
-        </LinearLayout>
+                <!--            <ProgressBar-->
+                <!--                android:id="@+id/processBar"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_gravity="center"-->
+                <!--                android:indeterminateDrawable="@drawable/background_custom_progress_bar"-->
+                <!--                android:visibility="gone" />-->
 
-        <!--        <FrameLayout-->
-        <!--            android:id="@+id/processBar"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:background="@color/black_shade"-->
-        <!--            android:visibility="@{homeViewModel.processBar?view.VISIBLE:view.GONE}">-->
 
-        <!--            <ProgressBar-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_gravity="center" />-->
-        <!--        </FrameLayout>-->
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Large.Circle"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:visibility="gone"
+            app:SpinKit_Color="@color/red"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonDownload" />
+
+    </LinearLayout>
 </layout>

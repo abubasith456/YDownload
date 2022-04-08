@@ -11,11 +11,12 @@ import com.example.ydownload.databinding.ActivitySplashBinding;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.Circle;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
 
 public class SplashScreen extends AppCompatActivity {
 
     private ActivitySplashBinding activitySplashBinding;
-    private final Sprite circle = new Circle();
+    private final Sprite circle = new ThreeBounce();
     private final Handler handler = new Handler();
 
     @Override

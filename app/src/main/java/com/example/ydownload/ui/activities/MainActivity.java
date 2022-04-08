@@ -3,30 +3,37 @@ package com.example.ydownload.ui.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ydownload.R;
 import com.example.ydownload.databinding.ActivityMainBinding;
+import com.example.ydownload.ui.Facebook.FacebookFragment;
+import com.example.ydownload.utils.DownloaderUtil;
+import com.example.ydownload.utils.SharedPreference;
 
-import java.io.File;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
@@ -34,13 +41,11 @@ import at.huber.youtubeExtractor.YtFile;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding activityMainBinding;
-    private static final int ITAG_FOR_AUDIO = 140;
-
-    private static String youtubeLink;
-
+    private ActivityMainBinding activityMainBinding;
+    private static String urlLink;
     private LinearLayout mainLayout;
-    private ProgressBar mainProgressBar;
+    private ProgressBar mainProgressBarYoutube;
+//    private FrameLayout processBarFacebook, layoutFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +53,131 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_main);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainLayout = activityMainBinding.mainLayout;
-        mainProgressBar = activityMainBinding.processBar;
-        // Check how it was started and if we can get the youtube link
+        mainProgressBarYoutube = activityMainBinding.processBarYoutube;
+        SharedPreference.getInstance().saveValue(getApplicationContext(), "button", "play");
         // Check how it was started and if we can get the youtube link
         if (savedInstanceState == null && Intent.ACTION_SEND.equals(getIntent().getAction())
                 && getIntent().getType() != null && "text/plain".equals(getIntent().getType())) {
 
-            String ytLink = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            String intentUrlValue = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            urlLink = intentUrlValue;
+            if (intentUrlValue != null) {
+                Log.e("Get Url", urlLink);
+                if ((intentUrlValue.contains("://youtu.be/") || intentUrlValue.contains("youtube.com/watch?v="))) {
+                    activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+                    activityMainBinding.frameLayoutFacebook.setVisibility(View.GONE);
 
-            if (ytLink != null
-                    && (ytLink.contains("://youtu.be/") || ytLink.contains("youtube.com/watch?v="))) {
-                youtubeLink = ytLink;
-                // We have a valid link
-                getYoutubeDownloadUrl(youtubeLink);
+                    // We have a valid link
+                    getYoutubeDownloadUrl(urlLink);
+
+                } else if (intentUrlValue.contains("facebook.com") || intentUrlValue.contains("fb.watch")) {
+                    activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.VISIBLE);
+                    activityMainBinding.frameLayoutFacebook.setVisibility(View.VISIBLE);
+                    Log.e("Get Url", urlLink);
+                    executeFacebookVideo(urlLink);
+                } else {
+                    Toast.makeText(this, R.string.error_no_yt_link, Toast.LENGTH_LONG).show();
+                    finish();
+                }
             } else {
-                Toast.makeText(this, R.string.error_no_yt_link, Toast.LENGTH_LONG).show();
-                finish();
+                Log.e("Get url", "null");
             }
-        } else if (savedInstanceState != null && youtubeLink != null) {
-            getYoutubeDownloadUrl(youtubeLink);
+        } else if (savedInstanceState != null && urlLink != null) {
+            getYoutubeDownloadUrl(urlLink);
         } else {
             finish();
+        }
+
+        activityMainBinding.buttonDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreference.getInstance().saveValue(getApplicationContext(), "button", "download");
+                executeFacebookVideo(urlLink);
+            }
+        });
+    }
+
+    private void executeFacebookVideo(String url) {
+        try {
+            if (url.contains("fb.watch")) {
+                openWebView(url);
+            } else {
+                new CallGetFbData().execute(url);
+            }
+        } catch (Exception e) {
+            Log.e("Error Facebook", e.getMessage());
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void openWebView(String url) {
+        try {
+            activityMainBinding.webView.getSettings().setJavaScriptEnabled(true);
+            activityMainBinding.webView.loadUrl(url);
+            activityMainBinding.webView.setWebViewClient(new WebViewClient() {
+
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String urlNewString) {
+                    return true;
+                }
+
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap facIcon) {
+                    //SHOW LOADING IF IT ISN'T ALREADY VISIBLE
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    new CallGetFbData().execute(url);
+                    Log.e("onPageFinished", "" + url);
+                }
+            });
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+        }
+    }
+
+    class CallGetFbData extends AsyncTask<String, Void, Document> {
+
+        Document fbDoc;
+
+        @Override
+        protected Document doInBackground(String... strings) {
+            try {
+                fbDoc = Jsoup.connect(strings[0]).get();
+            } catch (IOException e) {
+                activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+                e.printStackTrace();
+            }
+            return fbDoc;
+        }
+
+        @Override
+        protected void onPostExecute(Document document) {
+            try {
+                String videoUrl = document.select("meta[property=\"og:video\"]")
+                        .last().attr("content");
+                if (!videoUrl.equals("")) {
+                    activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+                    String button = SharedPreference.getInstance().getValue(getApplicationContext(), "button");
+                    if (button.equals("download")) {
+                        DownloaderUtil.download(getApplicationContext(), videoUrl, DownloaderUtil.RootDirFacebook, "facebook" + System.currentTimeMillis() + ".mp4");
+                    } else {
+                        Uri uri = Uri.parse(videoUrl);
+                        activityMainBinding.videoViewFaceBook.setVisibility(View.VISIBLE);
+                        activityMainBinding.videoViewFaceBook.setVideoURI(uri);
+                        MediaController mediaController = new MediaController(MainActivity.this);
+                        mediaController.setAnchorView(activityMainBinding.videoViewFaceBook);
+                        mediaController.setMediaPlayer(activityMainBinding.videoViewFaceBook);
+                        activityMainBinding.videoViewFaceBook.setMediaController(mediaController);
+                        activityMainBinding.videoViewFaceBook.start();
+                    }
+                }
+            } catch (Exception e) {
+                activityMainBinding.frameLayoutProcessBarFacebook.setVisibility(View.GONE);
+                Log.e("Error", e.getMessage());
+            }
         }
     }
 
@@ -77,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
-                mainProgressBar.setVisibility(View.GONE);
+                mainProgressBarYoutube.setVisibility(View.GONE);
 
                 if (ytFiles == null) {
                     // Something went wrong we got no urls. Always check this.
@@ -118,25 +227,11 @@ public class MainActivity extends AppCompatActivity {
                     filename = videoTitle + "." + ytfile.getFormat().getExt();
                 }
                 filename = filename.replaceAll("[\\\\><\"|*?%:#/]", "");
-                downloadFromUrl(ytfile.getUrl(), videoTitle, filename);
+                DownloaderUtil.download(getApplicationContext(), ytfile.getUrl(), videoTitle, filename);
                 Toast.makeText(getApplicationContext(), "Download will start... Please check your notification bar.", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
         mainLayout.addView(btn);
     }
-
-    private void downloadFromUrl(String youtubeDlUrl, String downloadTitle, String fileName) {
-        Uri uri = Uri.parse(youtubeDlUrl);
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        request.setTitle(downloadTitle);
-
-        request.allowScanningByMediaScanner();
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
-
-        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(request);
-    }
-
 }
