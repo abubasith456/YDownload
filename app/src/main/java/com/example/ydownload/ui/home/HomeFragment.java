@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ydownload.databinding.FragmentHomeBinding;
+import com.example.ydownload.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 import at.huber.youtubeExtractor.VideoMeta;
@@ -49,18 +50,17 @@ public class HomeFragment extends Fragment {
         binding.buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utils.getInstance().hideSoftKeyboard(getActivity());
                 String yLink = binding.editText.getText().toString();
-                if (yLink != null) {
+                if (yLink != null && !yLink.isEmpty()) {
                     if ((yLink.contains("://youtu.be/") || yLink.contains("youtube.com/watch?v="))) {
                         binding.processBar.setVisibility(View.VISIBLE);
                         getYoutubeDownloadUrl(binding.editText.getText().toString());
                     } else {
-//                        Toast.makeText(getContext(), "Not a valid YouTube link!", Toast.LENGTH_SHORT).show();
                         Snackbar.make(view, "Not a valid YouTube link!", Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                     }
                 } else {
-//                    Toast.makeText(getContext(), "Please enter the URL", Toast.LENGTH_SHORT).show();
                     Snackbar.make(view, "Please enter the URL", Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
                 }
