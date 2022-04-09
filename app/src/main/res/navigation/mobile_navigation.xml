@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.ydownload.ui.home.HomeFragment"
-        android:label="@string/youtube"
+        android:label="@string/youtube_download"
         tools:layout="@layout/fragment_home" />
 
     <fragment
@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/nav_facebook"
         android:name="com.example.ydownload.ui.Facebook.FacebookFragment"
-        android:label="Facebook"
+        android:label="@string/facebook"
         tools:layout="@layout/fragment_facebook" />
 </navigation>

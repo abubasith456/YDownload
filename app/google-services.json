@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "613774647430",
+    "firebase_url": "https://prefab-glazing-325312-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "prefab-glazing-325312",
+    "storage_bucket": "prefab-glazing-325312.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613774647430:android:4ddd6fe3841bba72e57107",
+        "android_client_info": {
+          "package_name": "com.example.hayatdealer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613774647430-kuu4bos2rpbrrggg72utu6mdtgd5sebt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWvqT-32MRDybMNHISR6osW6HanKfM8uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613774647430-kuu4bos2rpbrrggg72utu6mdtgd5sebt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613774647430:android:816f883d3cd258c2e57107",
+        "android_client_info": {
+          "package_name": "com.example.hayatstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613774647430-k4h7kj7tkeavcmlh85o1u8g2g2j2fd07.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hayatstore",
+            "certificate_hash": "b8797ae46d4e38d443a49bccf4face11d94d6742"
+          }
+        },
+        {
+          "client_id": "613774647430-kuu4bos2rpbrrggg72utu6mdtgd5sebt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWvqT-32MRDybMNHISR6osW6HanKfM8uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613774647430-kuu4bos2rpbrrggg72utu6mdtgd5sebt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613774647430:android:c1a6a6d816547820e57107",
+        "android_client_info": {
+          "package_name": "com.example.ydownload"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613774647430-kuu4bos2rpbrrggg72utu6mdtgd5sebt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWvqT-32MRDybMNHISR6osW6HanKfM8uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613774647430-kuu4bos2rpbrrggg72utu6mdtgd5sebt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613774647430:android:50b36d9b17e3367fe57107",
+        "android_client_info": {
+          "package_name": "com.trizions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613774647430-kuu4bos2rpbrrggg72utu6mdtgd5sebt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWvqT-32MRDybMNHISR6osW6HanKfM8uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613774647430-kuu4bos2rpbrrggg72utu6mdtgd5sebt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -24,9 +24,11 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.MediaController;
 import android.widget.Toast;
+
 import com.example.ydownload.databinding.FragmentFacebookBinding;
 import com.example.ydownload.utils.DownloaderUtil;
 import com.example.ydownload.utils.SharedPreference;
+import com.example.ydownload.utils.Utils;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.google.android.material.snackbar.Snackbar;
@@ -66,23 +68,28 @@ public class FacebookFragment extends Fragment {
         facebookFragmentBinding.buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String url = facebookFragmentBinding.editText.getText().toString();
-                if (url != null && !url.isEmpty()) {
-                    if (url.contains("facebook.com")) {
-                        processBar.setVisibility(View.VISIBLE);
-                        SharedPreference.getInstance().saveValue(getContext(), "button", "download");
-                        new CallGetFbData().execute(facebookFragmentBinding.editText.getText().toString());
-                    } else if (url.contains("fb.watch")) {
-                        SharedPreference.getInstance().saveValue(getContext(), "button", "download");
-                        processBar.setVisibility(View.VISIBLE);
-                        openWebView(url);
+                Utils.getInstance().hideSoftKeyboard(getActivity());
+                if (Utils.getInstance().isNetworkConnectionAvailable(getContext())) {
+                    String url = facebookFragmentBinding.editText.getText().toString();
+                    if (url != null && !url.isEmpty()) {
+                        if (url.contains("facebook.com")) {
+                            processBar.setVisibility(View.VISIBLE);
+                            SharedPreference.getInstance().saveValue(getContext(), "button", "download");
+                            new CallGetFbData().execute(facebookFragmentBinding.editText.getText().toString());
+                        } else if (url.contains("fb.watch")) {
+                            SharedPreference.getInstance().saveValue(getContext(), "button", "download");
+                            processBar.setVisibility(View.VISIBLE);
+                            openWebView(url);
+                        } else {
+                            Snackbar.make(view, "Invalid facebook URL!", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+                        }
                     } else {
-                        Snackbar.make(view, "Invalid facebook URL!", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(view, "Please enter the URL!", Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                     }
                 } else {
-                    Snackbar.make(view, "Please enter the URL!", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(view, "Please check your internet connection!", Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
                 }
             }
@@ -91,22 +98,28 @@ public class FacebookFragment extends Fragment {
         facebookFragmentBinding.buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = facebookFragmentBinding.editText.getText().toString();
-                if (url != null && !url.isEmpty()) {
-                    if (url.contains("facebook.com")) {
-                        processBar.setVisibility(View.VISIBLE);
-                        SharedPreference.getInstance().saveValue(getContext(), "button", "play");
-                        new CallGetFbData().execute(facebookFragmentBinding.editText.getText().toString());
-                    } else if (url.contains("fb.watch")) {
-                        processBar.setVisibility(View.VISIBLE);
-                        SharedPreference.getInstance().saveValue(getContext(), "button", "play");
-                        openWebView(url);
+                Utils.getInstance().hideSoftKeyboard(getActivity());
+                if (Utils.getInstance().isNetworkConnectionAvailable(getContext())) {
+                    String url = facebookFragmentBinding.editText.getText().toString();
+                    if (url != null && !url.isEmpty()) {
+                        if (url.contains("facebook.com")) {
+                            processBar.setVisibility(View.VISIBLE);
+                            SharedPreference.getInstance().saveValue(getContext(), "button", "play");
+                            new CallGetFbData().execute(facebookFragmentBinding.editText.getText().toString());
+                        } else if (url.contains("fb.watch")) {
+                            processBar.setVisibility(View.VISIBLE);
+                            SharedPreference.getInstance().saveValue(getContext(), "button", "play");
+                            openWebView(url);
+                        } else {
+                            Snackbar.make(view, "Invalid facebook URL!", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+                        }
                     } else {
-                        Snackbar.make(view, "Invalid facebook URL!", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(view, "Please enter the URL!", Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                     }
                 } else {
-                    Snackbar.make(view, "Please enter the URL!", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(view, "Please check your internet connection!", Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
                 }
             }
@@ -166,6 +179,7 @@ public class FacebookFragment extends Fragment {
                     processBar.setVisibility(View.GONE);
                     String button = SharedPreference.getInstance().getValue(getContext(), "button");
                     if (button.equals("download")) {
+                        facebookFragmentBinding.editText.setText("");
                         DownloaderUtil.download(getContext(), videoUrl, DownloaderUtil.RootDirFacebook, "facebook" + System.currentTimeMillis() + ".mp4");
                     } else {
                         Uri uri = Uri.parse(videoUrl);

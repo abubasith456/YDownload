@@ -2,6 +2,7 @@ package com.example.ydownload.ui.home;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.ydownload.insta_models.Instagram;
 import com.example.ydownload.databinding.FragmentHomeBinding;
 import com.example.ydownload.utils.DownloaderUtil;
 import com.example.ydownload.utils.SharedPreference;
@@ -25,9 +27,6 @@ import com.example.ydownload.utils.Utils;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
@@ -58,22 +57,26 @@ public class HomeFragment extends Fragment {
         binding.buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Utils.getInstance().hideSoftKeyboard(getActivity());
-                String yLink = binding.editText.getText().toString();
+                if (Utils.getInstance().isNetworkConnectionAvailable(getContext())) {
+                    String yLink = binding.editText.getText().toString();
 //                downloadFB(yLink);
-                if (yLink != null && !yLink.isEmpty()) {
-                    if ((yLink.contains("://youtu.be/") || yLink.contains("youtube.com/watch?v="))) {
-                        binding.spinKit.setVisibility(View.VISIBLE);
-                        binding.mainLayout.removeAllViews();
-                        getYoutubeDownloadUrl(binding.editText.getText().toString());
-                        SharedPreference.getInstance().saveValue(getContext(), "ButtonPress", "yes");
+                    if (yLink != null && !yLink.isEmpty()) {
+                        if ((yLink.contains("://youtu.be/") || yLink.contains("youtube.com/watch?v=") || yLink.contains("youtube.com/shorts"))) {
+                            binding.spinKit.setVisibility(View.VISIBLE);
+                            binding.mainLayout.removeAllViews();
+                            getYoutubeDownloadUrl(binding.editText.getText().toString());
+                            SharedPreference.getInstance().saveValue(getContext(), "ButtonPress", "yes");
+                        } else {
+                            Snackbar.make(view, "Not a valid YouTube link!", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+                        }
                     } else {
-                        Snackbar.make(view, "Not a valid YouTube link!", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(view, "Please enter the URL!", Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                     }
                 } else {
-                    Snackbar.make(view, "Please enter the URL", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(view, "Please check your internet connection!", Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED)
                             .setAction("Action", null).show();
                 }
             }
@@ -128,9 +131,9 @@ public class HomeFragment extends Fragment {
                     filename = videoTitle + "." + ytfile.getFormat().getExt();
                 }
                 filename = filename.replaceAll("[\\\\><\"|*?%:#/]", "");
-                DownloaderUtil.download(getContext(),ytfile.getUrl(), videoTitle, filename);
+                DownloaderUtil.download(getContext(), ytfile.getUrl(), videoTitle, filename);
 //                downloadFromUrl(ytfile.getUrl(), videoTitle, filename);
-                Toast.makeText(getContext(), "Download will start... Please check your notification bar.", Toast.LENGTH_SHORT).show();
+                binding.editText.setText("");
             }
         });
         binding.mainLayout.addView(btn, 0);

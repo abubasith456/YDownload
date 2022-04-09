@@ -18,4 +18,12 @@
         <a href="https://github.com/HaarigerHarald/android-youtubeExtractor/releases/latest">latest GitHub release</a></string>
     <string name="youtube">Youtube</string>
     <string name="youtube_video_download">Youtube Video Download</string>
+    <string name="note_please_paste_facebook_video_content_url"><b>Note:</b> Please paste Facebook video content URL only</string>
+    <string name="paste_your_youtube_url_here">Paste your Youtube URL here</string>
+    <string name="paste_url">Paste URL:</string>
+    <string name="facebook">Facebook Downloader</string>
+    <string name="youtube_download">Youtube Downloader</string>
+
+    <string name="key_instagram">instaCookies</string>
+    <string name="key_facebook">fbCookies</string>
 </resources>
