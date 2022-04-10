@@ -56,10 +56,11 @@ public class DashboardActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Boolean> task) {
                 if (task.isSuccessful()) {
                     final String new_version_code = firebaseRemoteConfig.getString("new_version_code");
+                    final String description = firebaseRemoteConfig.toString();
+                    Log.e("description", "" + description);
                     if (Integer.parseInt(new_version_code) > getCurrentVersionCode()) {
                         showDialog();
                     }
-
                 }
             }
         });
@@ -76,7 +77,7 @@ public class DashboardActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_facebook, R.id.nav_about_us)
+                R.id.nav_home, R.id.nav_facebook, R.id.nav_whatsapp,R.id.nav_about_us)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_dashboard);
@@ -104,7 +105,9 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
-        }).show();
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 

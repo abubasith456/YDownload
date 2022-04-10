@@ -176,6 +176,7 @@ public class FacebookFragment extends Fragment {
                 String videoUrl = document.select("meta[property=\"og:video\"]")
                         .last().attr("content");
                 if (!videoUrl.equals("")) {
+                    Log.e("videoUrl",""+videoUrl);
                     processBar.setVisibility(View.GONE);
                     String button = SharedPreference.getInstance().getValue(getContext(), "button");
                     if (button.equals("download")) {
