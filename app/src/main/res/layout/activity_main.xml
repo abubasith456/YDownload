@@ -27,6 +27,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="23dp"
                     android:text="@string/youtube_video_download"
+                    android:fontFamily="@font/happy_monkey"
                     android:textAppearance="@android:style/TextAppearance.WindowTitle"
                     android:textColor="@android:color/black"
                     android:textSize="20sp" />

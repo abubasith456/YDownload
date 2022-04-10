@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/about_icon_copy_rights.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/background_custom_progress_bar.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/background_half_round_corner_shape.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/background_rounded_edit_text_gray.xml" value="0.12" />
+        <entry key="app/src/main/res/drawable/ic_icon_wp.xml" value="0.12" />
+        <entry key="app/src/main/res/drawable/ic_wp.xml" value="0.12" />
+        <entry key="app/src/main/res/drawable/icon_facebook.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/icon_home.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/logo_test.xml" value="0.12" />
         <entry key="app/src/main/res/layout-v26/activity_dashboard.xml" value="0.11510416666666666" />
-        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.307135009765625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11510416666666666" />
         <entry key="app/src/main/res/layout/activity_play_video.xml" value="0.11510416666666666" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1" />
@@ -17,13 +21,13 @@
         <entry key="app/src/main/res/layout/app_bar_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/content_dashboard.xml" value="0.2359375" />
         <entry key="app/src/main/res/layout/facebook_fragment.xml" value="0.11510416666666666" />
-        <entry key="app/src/main/res/layout/fragment_about_us.xml" value="0.35194788175355257" />
+        <entry key="app/src/main/res/layout/fragment_about_us.xml" value="0.14710243843697213" />
         <entry key="app/src/main/res/layout/fragment_facebook.xml" value="0.23912811279296878" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.11510416666666666" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.30124816894531253" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2143203735351563" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.11510416666666666" />
         <entry key="app/src/main/res/layout/nav_header_dashboard.xml" value="0.25" />
-        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.4632156372070313" />
         <entry key="app/src/main/res/menu/dashboard.xml" value="0.25" />
       </map>
     </option>

@@ -20,6 +20,7 @@
                 android:layout_marginTop="100dp"
                 android:layout_marginEnd="30dp"
                 android:padding="10dp"
+                android:fontFamily="@font/happy_monkey"
                 android:text="Paste URL:"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
@@ -34,6 +35,7 @@
                 android:elevation="20dp"
                 android:hint="Past Facebook video URL here"
                 android:padding="15dp"
+                android:fontFamily="@font/happy_monkey"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -55,14 +57,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/note_please_paste_facebook_video_content_url"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:fontFamily="@font/happy_monkey"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
@@ -75,6 +78,7 @@
                     android:backgroundTint="@color/blue"
                     android:elevation="20dp"
                     android:text="Play video"
+                    android:fontFamily="@font/happy_monkey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +94,7 @@
                     android:backgroundTint="@color/blue"
                     android:elevation="20dp"
                     android:text="Download"
+                    android:fontFamily="@font/happy_monkey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
