@@ -92,41 +92,42 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void showDialog() {
+        if (featureMessage.equals("")) {
+            featureMessage = "Developer can not give features information";
+        }
+        if (updateURL.equals("")) {
+            updateURL = "https://www.google.com/";
+        }
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            if (featureMessage == null) {
-                featureMessage = "Developer can not give features information";
-            }
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Update available!");
-            builder.setMessage("Features: " + featureMessage);
-            builder.setCancelable(false);
-            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    try {
-                        if (updateURL == null) {
-                            updateURL = "https://Yahoo.com";
-                        }
-                        Uri uri = Uri.parse("https://google.com"); // missing 'http://' will cause crashed
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
-                        System.exit(1);
-                    } catch (Exception e) {
-                        Toast.makeText(getApplication(), "Something went wrong!.. " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent intent = new Intent(SplashScreen.this, DashboardActivity.class);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Update available!");
+        builder.setMessage("Features: " + featureMessage);
+        builder.setCancelable(false);
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                try {
+                    Uri uri = Uri.parse(updateURL); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
-                    finish();
+                    System.exit(1);
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
+                    Toast.makeText(getApplication(), "Something went wrong!.. " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+
+            }
+        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(SplashScreen.this, DashboardActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
         }, 2000);
     }
 
@@ -138,5 +139,11 @@ public class SplashScreen extends AppCompatActivity {
             Log.e("Error", e.getMessage());
         }
         return packageInfo.versionCode;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getFeatureMessage();
     }
 }
