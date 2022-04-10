@@ -11,6 +11,6 @@
     android:layout_height="wrap_content"
     android:textSize="15sp"
     android:textColor="@color/black"
-    android:text="Sorry!, Whatsapp status downloader will add. "/>
+    android:text="Sorry!, Whatsapp status downloader will add "/>
 
 </LinearLayout>
