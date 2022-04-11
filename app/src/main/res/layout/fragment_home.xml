@@ -40,11 +40,11 @@
             android:layout_marginEnd="30dp"
             android:background="@drawable/background_rounded_edit_text_gray"
             android:elevation="20dp"
+            android:fontFamily="@font/happy_monkey"
             android:hint="@string/paste_your_youtube_url_here"
             android:padding="15dp"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:fontFamily="@font/happy_monkey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -61,17 +61,19 @@
             android:background="@drawable/background_rounded_edit_text_gray"
             android:backgroundTint="@color/blue"
             android:elevation="20dp"
-            android:text="Download"
             android:fontFamily="@font/happy_monkey"
+            android:text="Download"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText" />
 
         <ScrollView
+            android:id="@+id/scrollViewFormatButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +91,49 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonDownload">
 
+            </LinearLayout>
+        </ScrollView>
+
+
+        <ScrollView
+            android:id="@+id/scrollViewInfo"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_15sdp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="5dp"
+                    app:cardMaxElevation="2dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:circularflow_defaultRadius="@dimen/_10sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_550sdp"
+                            android:background="@drawable/info1"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_550sdp"
+                            android:background="@drawable/info_2" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
         </ScrollView>
 

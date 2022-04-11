@@ -28,4 +28,6 @@
     <string name="key_facebook">fbCookies</string>
 
     <string name="copy_right" translatable="false">Copyrights © %1$d</string>
+    <string name="cannot_find">Cannot find whatsapp directory!</string>
+    <string name="file_not_found">File not found...!</string>
 </resources>

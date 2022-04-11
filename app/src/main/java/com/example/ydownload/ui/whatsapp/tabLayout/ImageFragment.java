@@ -16,11 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ydownload.R;
 import com.example.ydownload.adapter.ImageAdapter;
 import com.example.ydownload.databinding.ImageFragmentBinding;
 import com.example.ydownload.model.Status;
 import com.example.ydownload.utils.Common;
 import com.example.ydownload.viewModel.ImageViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -75,12 +77,11 @@ public class ImageFragment extends Fragment {
             execute(Common.STATUS_DIRECTORY_NEW);
 
         } else {
-//            Snackbar.make(getView(), "Cannot find whatsapp directory!", Snackbar.LENGTH_SHORT)
-//                    .setAction("Action", null).show();
-            Toast.makeText(getActivity(), "Cannot find whatsapp directory!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Cannot find whatsapp directory!", Toast.LENGTH_SHORT).show();
+            imageFragmentBinding.messageTextImage.setVisibility(View.VISIBLE);
+            imageFragmentBinding.messageTextImage.setText(R.string.cannot_find);
             imageFragmentBinding.swipeRefreshLayout.setRefreshing(false);
         }
-
     }
 
     private void execute(File wAFolder) {
@@ -98,20 +99,21 @@ public class ImageFragment extends Fragment {
                     if (!status.isVideo() && status.getTitle().endsWith(".jpg")) {
                         imagesList.add(status);
                     }
-
                 }
 
                 handler.post(() -> {
 
                     if (imagesList.size() <= 0) {
-//                        Snackbar.make(getView(), "Items not found...!", Snackbar.LENGTH_SHORT)
-//                                .setAction("Action", null).show();
-                        Toast.makeText(getActivity(), "Items not found...!", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Items not found...!", Toast.LENGTH_SHORT).show();
+                        imageFragmentBinding.messageTextImage.setVisibility(View.VISIBLE);
+                        imageFragmentBinding.messageTextImage.setText(R.string.file_not_found);
                     } else {
+                        imageFragmentBinding.messageTextImage.setVisibility(View.GONE);
+                        imageFragmentBinding.messageTextImage.setText("");
                     }
 
                     imageAdapter = new ImageAdapter(imagesList, imageFragmentBinding.imageContainer);
-                    imageFragmentBinding.recyclerViewImage.setLayoutManager(new GridLayoutManager(getActivity(),2));
+                    imageFragmentBinding.recyclerViewImage.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                     imageFragmentBinding.recyclerViewImage.setAdapter(imageAdapter);
                     imageAdapter.notifyDataSetChanged();
 //                    progressBar.setVisibility(View.GONE);
@@ -120,12 +122,9 @@ public class ImageFragment extends Fragment {
             } else {
 
                 handler.post(() -> {
-//                    progressBar.setVisibility(View.GONE);
-//                    messageTextView.setVisibility(View.VISIBLE);
-//                    messageTextView.setText(R.string.no_files_found);
-//                    Snackbar.make(getView(), "Items not found...!", Snackbar.LENGTH_SHORT)
-//                            .setAction("Action", null).show();
-                    Toast.makeText(getActivity(), "Items not found...!", Toast.LENGTH_SHORT).show();
+                    imageFragmentBinding.messageTextImage.setVisibility(View.VISIBLE);
+                    imageFragmentBinding.messageTextImage.setText(R.string.file_not_found);
+                    Toast.makeText(getActivity(), R.string.file_not_found, Toast.LENGTH_SHORT).show();
                 });
 
             }

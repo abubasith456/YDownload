@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.ydownload.databinding.FragmentHomeBinding;
 import com.example.ydownload.utils.DownloaderUtil;
 import com.example.ydownload.utils.SharedPreference;
@@ -111,6 +112,8 @@ public class HomeFragment extends Fragment {
 
     private void addButtonToMainLayout(final String videoTitle, final YtFile ytfile) {
         // Display some buttons and let the user choose the format
+        binding.scrollViewFormatButton.setVisibility(View.VISIBLE);
+        binding.scrollViewInfo.setVisibility(View.GONE);
         String btnText = (ytfile.getFormat().getHeight() == -1) ? "Audio " +
                 ytfile.getFormat().getAudioBitrate() + " kbit/s" :
                 ytfile.getFormat().getHeight() + "p";

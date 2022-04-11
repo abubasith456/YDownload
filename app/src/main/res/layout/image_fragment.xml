@@ -3,8 +3,8 @@
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeRefreshLayout"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.whatsapp.tabLayout.ImageFragment">
@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
                 android:visibility="gone" />
 
         </RelativeLayout>

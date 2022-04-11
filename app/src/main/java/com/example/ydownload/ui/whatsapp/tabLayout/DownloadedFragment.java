@@ -72,7 +72,7 @@ public class DownloadedFragment extends Fragment {
 
         if (app_dir.exists()) {
 
-//            no_files_found.setVisibility(View.GONE);
+            downloadedFragmentBinding.textViewFileNot.setVisibility(View.GONE);
 
             new Thread(() -> {
                 File[] savedFiles;
@@ -101,10 +101,8 @@ public class DownloadedFragment extends Fragment {
 
                     handler.post(() -> {
 //                        progressBar.setVisibility(View.GONE);
-//                        no_files_found.setVisibility(View.VISIBLE);
-//                        Snackbar.make(getView(), "Dir doest not exists!", Snackbar.LENGTH_SHORT)
-//                                .setAction("Action", null).show();
-                        Toast.makeText(getActivity(), "File not found...!", Toast.LENGTH_SHORT).show();
+                        downloadedFragmentBinding.textViewFileNot.setVisibility(View.VISIBLE);
+//                        Toast.makeText(getActivity(), "File not found...!", Toast.LENGTH_SHORT).show();
                     });
 
                 }
@@ -112,10 +110,9 @@ public class DownloadedFragment extends Fragment {
             }).start();
 
         } else {
-//            Snackbar.make(getView(), "File not found...!", Snackbar.LENGTH_SHORT)
-//                    .setAction("Action", null).show();
-//            Toast.makeText(getActivity(), "File not found...!", Toast.LENGTH_SHORT).show();
-            Toast.makeText(getActivity(), "Dir doest not exists!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Dir doest not exists!", Toast.LENGTH_SHORT).show();
+
+            downloadedFragmentBinding.textViewFileNot.setVisibility(View.VISIBLE);
         }
 
     }
