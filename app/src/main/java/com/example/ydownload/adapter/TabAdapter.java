@@ -11,37 +11,36 @@ import com.example.ydownload.ui.whatsapp.tabLayout.DownloadedFragment;
 import com.example.ydownload.ui.whatsapp.tabLayout.ImageFragment;
 import com.example.ydownload.ui.whatsapp.tabLayout.VideoFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TabAdapter extends FragmentPagerAdapter {
 
-    private Context myContext;
-    int totalTabs;
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public TabAdapter(@NonNull FragmentManager fm, Context myContext, int totalTabs) {
-        super(fm);
-        this.myContext = myContext;
-        this.totalTabs = totalTabs;
+    public TabAdapter(FragmentManager manager) {
+        super(manager);
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                ImageFragment imageFragment = new ImageFragment();
-                return imageFragment;
-            case 1:
-                VideoFragment videoFragment = new VideoFragment();
-                return videoFragment;
-            case 2:
-                DownloadedFragment downloadedFragment = new DownloadedFragment();
-                return downloadedFragment;
-            default:
-                return null;
-        }
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return totalTabs;
+        return mFragmentList.size();
     }
 }

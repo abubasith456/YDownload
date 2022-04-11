@@ -2,6 +2,7 @@ package com.example.ydownload.ui.whatsapp.tabLayout;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.example.ydownload.databinding.DownloadedFragmentBinding;
 import com.example.ydownload.model.Status;
 import com.example.ydownload.utils.Common;
 import com.example.ydownload.viewModel.DownloadedViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -100,7 +102,9 @@ public class DownloadedFragment extends Fragment {
                     handler.post(() -> {
 //                        progressBar.setVisibility(View.GONE);
 //                        no_files_found.setVisibility(View.VISIBLE);
-                        Toast.makeText(getActivity(), "Dir doest not exists", Toast.LENGTH_SHORT).show();
+//                        Snackbar.make(getView(), "Dir doest not exists!", Snackbar.LENGTH_SHORT)
+//                                .setAction("Action", null).show();
+                        Toast.makeText(getActivity(), "File not found...!", Toast.LENGTH_SHORT).show();
                     });
 
                 }
@@ -108,8 +112,10 @@ public class DownloadedFragment extends Fragment {
             }).start();
 
         } else {
-
-            Toast.makeText(getActivity(), "No file found..", Toast.LENGTH_SHORT).show();
+//            Snackbar.make(getView(), "File not found...!", Snackbar.LENGTH_SHORT)
+//                    .setAction("Action", null).show();
+//            Toast.makeText(getActivity(), "File not found...!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Dir doest not exists!", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -2,6 +2,7 @@ package com.example.ydownload.ui.whatsapp.tabLayout;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.example.ydownload.databinding.VideoFragmentBinding;
 import com.example.ydownload.model.Status;
 import com.example.ydownload.utils.Common;
 import com.example.ydownload.viewModel.VideoViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,11 +62,11 @@ public class VideoFragment extends Fragment {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        getStatus();
-        videoFragmentBinding.swipeRefreshLayout.setOnRefreshListener(this::getStatus);
+        getVideoStatus();
+        videoFragmentBinding.swipeRefreshLayout.setOnRefreshListener(this::getVideoStatus);
     }
 
-    private void getStatus() {
+    private void getVideoStatus() {
 
         if (Common.STATUS_DIRECTORY.exists()) {
 
@@ -75,7 +77,9 @@ public class VideoFragment extends Fragment {
             execute(Common.STATUS_DIRECTORY_NEW);
 
         } else {
-            Toast.makeText(getActivity(), "Cannot find the Whatsapp directory", Toast.LENGTH_SHORT).show();
+//            Snackbar.make(getView(), "Cannot find whatsapp directory!", Snackbar.LENGTH_SHORT)
+//                    .setAction("Action", null).show();
+            Toast.makeText(getActivity(), "Cannot find the Whatsapp directory!", Toast.LENGTH_SHORT).show();
             videoFragmentBinding.swipeRefreshLayout.setRefreshing(false);
         }
 
@@ -101,7 +105,9 @@ public class VideoFragment extends Fragment {
                 handler.post(() -> {
 
                     if (videoList.size() <= 0) {
-                        Toast.makeText(getActivity(), "Nothing found", Toast.LENGTH_SHORT).show();
+//                        Snackbar.make(getView(), "Items not found...!", Snackbar.LENGTH_SHORT)
+//                                .setAction("Action", null).show();
+                        Toast.makeText(getActivity(), "Items not found...!", Toast.LENGTH_SHORT).show();
                     } else {
 
                     }
@@ -115,7 +121,9 @@ public class VideoFragment extends Fragment {
             } else {
 
                 handler.post(() -> {
-                    Toast.makeText(getActivity(), "Nothing found", Toast.LENGTH_SHORT).show();
+//                    Snackbar.make(, "Items not found...!", Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED)
+//                            .setAction("Action", null).show();
+                    Toast.makeText(getActivity(), "Items not found...!", Toast.LENGTH_SHORT).show();
                 });
 
             }

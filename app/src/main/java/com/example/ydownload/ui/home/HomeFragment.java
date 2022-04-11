@@ -59,7 +59,6 @@ public class HomeFragment extends Fragment {
                 Utils.getInstance().hideSoftKeyboard(getActivity());
                 if (Utils.getInstance().isNetworkConnectionAvailable(getContext())) {
                     String yLink = binding.editText.getText().toString();
-//                downloadFB(yLink);
                     if (yLink != null && !yLink.isEmpty()) {
                         if ((yLink.contains("://youtu.be/") || yLink.contains("youtube.com/watch?v=") || yLink.contains("youtube.com/shorts"))) {
                             binding.spinKit.setVisibility(View.VISIBLE);

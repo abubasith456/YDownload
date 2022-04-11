@@ -16,9 +16,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Environment;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,9 @@ import android.widget.Toast;
 
 import com.example.ydownload.adapter.TabAdapter;
 import com.example.ydownload.databinding.WhatsappFragmentBinding;
+import com.example.ydownload.ui.whatsapp.tabLayout.DownloadedFragment;
+import com.example.ydownload.ui.whatsapp.tabLayout.ImageFragment;
+import com.example.ydownload.ui.whatsapp.tabLayout.VideoFragment;
 import com.example.ydownload.utils.Common;
 import com.example.ydownload.viewModel.WhatsappViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -35,7 +40,7 @@ import java.util.ArrayList;
 
 public class WhatsappFragment extends Fragment {
 
-    private static String[] WRITE_EXTERNAL_STORAGE;
+    //    private static String[] WRITE_EXTERNAL_STORAGE;
     private WhatsappViewModel mViewModel;
     private WhatsappFragmentBinding whatsappFragmentBinding;
     private static final int REQUEST_PERMISSIONS = 1234;
@@ -62,32 +67,23 @@ public class WhatsappFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(WhatsappViewModel.class);
-        WRITE_EXTERNAL_STORAGE=new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//        WRITE_EXTERNAL_STORAGE=new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         checkPermission();
-        whatsappFragmentBinding.tabLayout.addTab(whatsappFragmentBinding.tabLayout.newTab().setText("Image"));
-        whatsappFragmentBinding.tabLayout.addTab(whatsappFragmentBinding.tabLayout.newTab().setText("Video"));
-        whatsappFragmentBinding.tabLayout.addTab(whatsappFragmentBinding.tabLayout.newTab().setText("Downloaded"));
-        whatsappFragmentBinding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final TabAdapter tabAdapter = new TabAdapter(getChildFragmentManager(), getContext(), whatsappFragmentBinding.tabLayout.getTabCount());
-        whatsappFragmentBinding.viewPager.setAdapter(tabAdapter);
-        whatsappFragmentBinding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(whatsappFragmentBinding.tabLayout));
-        whatsappFragmentBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                whatsappFragmentBinding.viewPager.setCurrentItem(tab.getPosition());
-            }
+        try {
+            setupViewPager(whatsappFragmentBinding.viewPager);
+            whatsappFragmentBinding.tabLayout.setupWithViewPager(whatsappFragmentBinding.viewPager);
+        } catch (Exception exception) {
+            Log.e("Error ==> ", "" + exception);
+        }
+    }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+    private void setupViewPager(ViewPager viewPager) {
+        TabAdapter adapter = new TabAdapter(getChildFragmentManager());
+        adapter.addFragment(new ImageFragment(), "Image");
+        adapter.addFragment(new VideoFragment(), "Videos");
+        adapter.addFragment(new DownloadedFragment(), "Saved files");
+        viewPager.setAdapter(adapter);
     }
 
     private void checkPermission() {
@@ -95,7 +91,8 @@ public class WhatsappFragment extends Fragment {
             if (Environment.isExternalStorageManager()) {
 //                startActivity(new Intent(this, MainActivity.class));
 //                Toast.makeText(getContext(), "Loading..", Toast.LENGTH_SHORT).show();
-            } else { //request for the permission
+            } else {
+                //request for the permission
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                 Uri uri = Uri.fromParts("package", getContext().getPackageName(), null);
                 intent.setData(uri);
