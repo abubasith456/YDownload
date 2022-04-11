@@ -7,7 +7,7 @@
 
         <variable
             name="homeViewModel"
-            type="com.example.ydownload.ui.home.HomeViewModel" />
+            type="com.example.ydownload.viewModel.HomeViewModel" />
 
         <variable
             name="view"

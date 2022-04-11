@@ -17,6 +17,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/player"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.YDownload"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
@@ -49,6 +50,16 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+        
+        <provider
+            android:authorities="${applicationId}.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
         <receiver
             android:name=".receiver.MyBroadcast"

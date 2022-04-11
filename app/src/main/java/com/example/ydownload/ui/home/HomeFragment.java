@@ -22,6 +22,7 @@ import com.example.ydownload.databinding.FragmentHomeBinding;
 import com.example.ydownload.utils.DownloaderUtil;
 import com.example.ydownload.utils.SharedPreference;
 import com.example.ydownload.utils.Utils;
+import com.example.ydownload.viewModel.HomeViewModel;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.google.android.material.snackbar.Snackbar;
