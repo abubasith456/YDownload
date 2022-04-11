@@ -43,7 +43,15 @@ public class SplashScreen extends AppCompatActivity {
         activitySplashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         firebaseFirestore = FirebaseFirestore.getInstance();
         activitySplashBinding.spinKit.setIndeterminateDrawable(circle);
-
+  /*      boolean firstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstRun", true);
+        if (firstRun){
+            //... Display the dialog message here ...
+            // Save the state
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("firstRun", false)
+                    .commit();
+        }*/
         getFeatureMessage();
         handler.postDelayed(() -> {
             try {

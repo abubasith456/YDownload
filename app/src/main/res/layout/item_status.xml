@@ -40,7 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/icon_download"
-                        android:backgroundTint="@color/black" />
+                        android:backgroundTint="@color/blue" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -54,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/icon_share"
-                        android:backgroundTint="@color/black" />
+                        android:backgroundTint="@color/blue" />
 
                 </LinearLayout>
 
