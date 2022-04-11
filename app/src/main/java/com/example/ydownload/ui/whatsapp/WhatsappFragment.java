@@ -88,27 +88,13 @@ public class WhatsappFragment extends Fragment {
 
             }
         });
-
-
-//        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/whatsapp/Media/.Statuses/");
-//        Log.e("All files", "" + filesList.toString());
-////        /storage/emulated/0
-//        if (folder.exists()) {
-//            File[] allFiles = folder.listFiles(new FilenameFilter() {
-//                public boolean accept(File dir, String name) {
-//                    return (name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png"));
-//                }
-//            });
-//            Log.e("All files", allFiles.toString());
-//        }
-
     }
 
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (Environment.isExternalStorageManager()) {
 //                startActivity(new Intent(this, MainActivity.class));
-                Toast.makeText(getContext(), "Loading..", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Loading..", Toast.LENGTH_SHORT).show();
             } else { //request for the permission
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                 Uri uri = Uri.fromParts("package", getContext().getPackageName(), null);
@@ -118,7 +104,7 @@ public class WhatsappFragment extends Fragment {
         } else {
 //            //below android 11=======
 //            startActivity(new Intent(this, MainActivity.class));
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
         }
     }
 

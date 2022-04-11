@@ -21,6 +21,7 @@ import com.example.ydownload.databinding.ImageFragmentBinding;
 import com.example.ydownload.model.Status;
 import com.example.ydownload.utils.Common;
 import com.example.ydownload.viewModel.ImageViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -75,7 +76,8 @@ public class ImageFragment extends Fragment {
             execute(Common.STATUS_DIRECTORY_NEW);
 
         } else {
-            Toast.makeText(getActivity(), "Cannot find directory", Toast.LENGTH_SHORT).show();
+//            Snackbar.make(get, "Saved to " + Common.APP_DIR, Snackbar.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Cannot find whatsapp directory", Toast.LENGTH_SHORT).show();
             imageFragmentBinding.swipeRefreshLayout.setRefreshing(false);
         }
 
