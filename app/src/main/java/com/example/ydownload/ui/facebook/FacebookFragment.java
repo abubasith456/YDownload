@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.MediaController;
 
 import com.example.ydownload.databinding.FragmentFacebookBinding;
+import com.example.ydownload.ui.BaseFragment;
 import com.example.ydownload.utils.DownloaderUtil;
 import com.example.ydownload.utils.SharedPreference;
 import com.example.ydownload.utils.Utils;
@@ -35,7 +36,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
-public class FacebookFragment extends Fragment {
+public class FacebookFragment extends BaseFragment {
 
     private FacebookViewModel mViewModel;
     private FragmentFacebookBinding facebookFragmentBinding;
@@ -68,12 +69,12 @@ public class FacebookFragment extends Fragment {
                     String url = facebookFragmentBinding.editText.getText().toString();
                     if (url != null && !url.isEmpty()) {
                         if (url.contains("facebook.com")) {
-                            processBar.setVisibility(View.VISIBLE);
+                            onStartProgress("Please wait...");
                             SharedPreference.getInstance().saveValue(getContext(), "button", "download");
                             new CallGetFbData().execute(facebookFragmentBinding.editText.getText().toString());
                         } else if (url.contains("fb.watch")) {
                             SharedPreference.getInstance().saveValue(getContext(), "button", "download");
-                            processBar.setVisibility(View.VISIBLE);
+                            onStartProgress("Please wait...");
                             openWebView(url);
                         } else {
                             Snackbar.make(view, "Invalid facebook URL!", Snackbar.LENGTH_SHORT)
@@ -98,11 +99,11 @@ public class FacebookFragment extends Fragment {
                     String url = facebookFragmentBinding.editText.getText().toString();
                     if (url != null && !url.isEmpty()) {
                         if (url.contains("facebook.com")) {
-                            processBar.setVisibility(View.VISIBLE);
+                            onStartProgress("Please wait...");
                             SharedPreference.getInstance().saveValue(getContext(), "button", "play");
                             new CallGetFbData().execute(facebookFragmentBinding.editText.getText().toString());
                         } else if (url.contains("fb.watch")) {
-                            processBar.setVisibility(View.VISIBLE);
+                            onStartProgress("Please wait...");
                             SharedPreference.getInstance().saveValue(getContext(), "button", "play");
                             openWebView(url);
                         } else {
@@ -146,7 +147,7 @@ public class FacebookFragment extends Fragment {
             });
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
-            processBar.setVisibility(View.GONE);
+            onStopProgress();
         }
     }
 
@@ -159,7 +160,7 @@ public class FacebookFragment extends Fragment {
             try {
                 fbDoc = Jsoup.connect(strings[0]).get();
             } catch (IOException e) {
-                processBar.setVisibility(View.GONE);
+                onStopProgress();
                 e.printStackTrace();
             }
             return fbDoc;
@@ -172,7 +173,7 @@ public class FacebookFragment extends Fragment {
                         .last().attr("content");
                 if (!videoUrl.equals("")) {
                     Log.e("videoUrl",""+videoUrl);
-                    processBar.setVisibility(View.GONE);
+                    onStopProgress();
                     String button = SharedPreference.getInstance().getValue(getContext(), "button");
                     if (button.equals("download")) {
                         facebookFragmentBinding.editText.setText("");
@@ -190,7 +191,7 @@ public class FacebookFragment extends Fragment {
 //                DownloaderUtil.download(getContext(), videoUrl, DownloaderUtil.RootDirFacebook, "facebook" + System.currentTimeMillis() + ".mp4");
                 }
             } catch (Exception e) {
-                processBar.setVisibility(View.GONE);
+                onStopProgress();
                 Log.e("Error", e.getMessage());
             }
         }

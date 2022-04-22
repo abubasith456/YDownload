@@ -44,6 +44,12 @@ public class Common {
     public static final File STATUS_DIRECTORY_NEW = new File(Environment.getExternalStorageDirectory() +
             File.separator + "Android/media/com.whatsapp/WhatsApp/Media/.Statuses");
 
+    public static final File CAMERA_DIRECTORY=new File(Environment.getExternalStorageDirectory() +
+            File.separator+"DCIM/Camera");
+
+    public static final File CAMERA_DIRECTORY_2=new File(Environment.getExternalStorageDirectory() +
+            File.separator+"/Pictures");
+
     public static String APP_DIR;
 
     public static void copyFile(Status status, Context context, RelativeLayout container) {

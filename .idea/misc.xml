@@ -25,9 +25,10 @@
         <entry key="app/src/main/res/layout/fragment_about_us.xml" value="0.14710243843697213" />
         <entry key="app/src/main/res/layout/fragment_facebook.xml" value="0.23912811279296878" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.11510416666666666" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.20722433460076045" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.14624176025390626" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.11510416666666666" />
         <entry key="app/src/main/res/layout/image_fragment.xml" value="0.11354166666666667" />
+        <entry key="app/src/main/res/layout/instagram_fragment.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/item_saved_files.xml" value="0.10216166178385416" />
         <entry key="app/src/main/res/layout/item_status.xml" value="0.12190399169921876" />
         <entry key="app/src/main/res/layout/nav_header_dashboard.xml" value="0.25" />

@@ -30,4 +30,8 @@
     <string name="copy_right" translatable="false">Copyrights © %1$d</string>
     <string name="cannot_find">Cannot find whatsapp directory!</string>
     <string name="file_not_found">File not found...!</string>
+
+    <string name="font_medium">FrutigerLTPro-Bold.ttf</string>
+    <string name="font_regular">FrutigerLTPro-Light.ttf</string>
+    <string name="ok">OK</string>
 </resources>

@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.home.HomeFragment">
+        tools:context=".ui.youtube.HomeFragment">
 
         <TextView
             android:layout_width="wrap_content"
@@ -98,43 +98,32 @@
         <ScrollView
             android:id="@+id/scrollViewInfo"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_height="match_parent">
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/background_half_round_corner_shape">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_15sdp">
+                android:padding="@dimen/_20sdp">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="5dp"
-                    app:cardMaxElevation="2dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:circularflow_defaultRadius="@dimen/_10sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_550sdp"
+                    android:background="@drawable/info1" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_550sdp"
-                            android:background="@drawable/info1"/>
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_550sdp"
-                            android:background="@drawable/info_2" />
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_550sdp"
+                    android:background="@drawable/info_2" />
             </LinearLayout>
+
         </ScrollView>
 
 
